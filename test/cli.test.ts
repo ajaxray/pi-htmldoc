@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import {
+	dashboardFor,
 	expiryLabel,
 	failure,
 	isMissingKey,
@@ -34,6 +35,11 @@ test("parseShare rejects a plain URL or broken JSON", () => {
 	assert.equal(parseShare("https://p.htmldoc.space/x\n"), undefined);
 	assert.equal(parseShare('{"id":"x"}'), undefined);
 	assert.equal(parseShare(""), undefined);
+});
+
+test("dashboardFor maps the viewer host to the app's dashboard", () => {
+	assert.equal(dashboardFor("https://p.htmldoc.space/ab12cd34ef56"), "https://htmldoc.space/dashboard");
+	assert.equal(dashboardFor("http://p.localhost:8000/x"), "http://localhost:8000/dashboard");
 });
 
 test("expiryLabel shows the date", () => {

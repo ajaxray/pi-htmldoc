@@ -139,3 +139,14 @@ export function parseSignedIn(stderr: string): SignedIn {
 export function expiryLabel(share: Share): string {
 	return share.expires_at === null ? "never (pinned)" : share.expires_at.slice(0, 10);
 }
+
+/**
+ * The dashboard on the app host that serves a share link: the viewer runs on
+ * the `p.` subdomain, so https://p.htmldoc.space/x maps to
+ * https://htmldoc.space/dashboard.
+ */
+export function dashboardFor(shareUrl: string): string {
+	const url = new URL(shareUrl);
+	url.hostname = url.hostname.replace(/^p\./, "");
+	return `${url.origin}/dashboard`;
+}

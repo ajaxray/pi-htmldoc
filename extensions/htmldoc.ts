@@ -13,6 +13,7 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import { getCapabilities, hyperlink, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import {
+	dashboardFor,
 	expiryLabel,
 	failure,
 	isMissingKey,
@@ -114,8 +115,15 @@ export default function (pi: ExtensionAPI) {
 			ctx.ui.setStatus(STATUS, undefined);
 			return;
 		}
+		// The full URL, so terminals without OSC 8 (JetBrains, for one) still make it clickable.
 		const theme = ctx.ui.theme;
-		ctx.ui.setStatus(STATUS, theme.fg("dim", "htmldoc ") + link(last.url, last.url.replace(/^https?:\/\//, "")));
+		const expiry =
+			last.expires_at === null
+				? theme.fg("dim", "  expires: never (pinned)")
+				: theme.fg("dim", `  expires: ${expiryLabel(last)} (`) +
+					theme.fg("muted", link(dashboardFor(last.url), "Pin to survive expiry")) +
+					theme.fg("dim", ")");
+		ctx.ui.setStatus(STATUS, theme.fg("dim", "last published: ") + link(last.url) + expiry);
 	};
 
 	const remember = (share: Published, ctx: ExtensionContext) => {
