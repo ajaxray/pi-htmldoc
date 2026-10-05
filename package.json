@@ -1,6 +1,6 @@
 {
   "name": "pi-htmldoc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pi package: publish a local HTML or Markdown file to an htmldoc.space share link with one tool call, sign-in included.",
   "license": "MIT",
   "type": "module",
