@@ -1,64 +1,92 @@
 # pi-htmldoc
 
-A [Pi](https://github.com/earendil-works/pi) package that publishes a local
-HTML or Markdown file to an unlisted [htmldoc.space](https://htmldoc.space)
-share link. Say "share this plan" and Pi answers with the link.
-
-Links live 30 days unless you pin them on your dashboard, and can be updated
-in place: re-sharing a file keeps its link.
-
-## Install
+**Free artifact publishing for Pi.** Pi writes the report, the plan, the
+mockup. Say "share it" and you get a link anyone can open. No deploy, no
+hosting, no repo.
 
 ```sh
 pi install npm:pi-htmldoc
 ```
 
-Try it for one session without installing:
+Then, in any Pi session:
 
-```sh
-pi -e npm:pi-htmldoc
-```
+> **You:** write a status report as HTML, then share it
+>
+> **Pi:** Here's your link: https://p.htmldoc.space/NO8JWj8cd57m. It expires
+> 2026-11-12. Say "share again" after edits and the same link updates.
+
+That link is a real page. [Open it.](https://p.htmldoc.space/NO8JWj8cd57m)
+
+## Why
+
+Agents are good at HTML: dashboards, reports, diagrams, mockups, plans with
+tables. Getting that file in front of someone else is the clumsy part. You
+attach it to a chat where it opens as source, or push it to a repo, or set up
+hosting for one page.
+
+pi-htmldoc makes it one step. The file goes to
+[htmldoc.space](https://htmldoc.space), and you get an unlisted link that
+renders it in any browser.
+
+- **HTML** is served byte for byte. Scripts run, so charts, tabs, and
+  collapsible sections work.
+- **Markdown** is rendered to a clean page.
+- **Re-share keeps the link.** Edit the file, say "share again", and the same
+  link shows the new version. Nobody needs a new URL.
 
 ## What you get
 
-- **`htmldoc_publish` tool.** The model calls it with a file path (and the id
-  of an earlier page to update it). The result carries the link, id, and
-  expiry, and Pi shows the link as clickable.
-- **Sign-in inside Pi.** The first share opens htmldoc.space's GitHub
-  approval page in your browser and shows the link and code in Pi. The tool
-  waits up to 10 minutes for your click, then publishes. The model never runs
-  login commands and never sees your API key.
-- **`/share <file>`.** Publish without a model turn. `/share` alone re-shares
-  the last file to the same link; `/share <file> --new` makes a new link.
-- **`/htmldoc-login`.** Sign in ahead of time, or switch accounts.
-- **Status line.** The footer shows the last link you shared.
-- **The `pi-htmldoc` skill**, tuned for the tool, so the model knows when to share
-  and when to update.
+- **`htmldoc_publish` tool.** Pi calls it whenever you ask to share, publish,
+  or make a file shareable. The result carries the link, id, and expiry, and
+  the link is clickable in your terminal.
+- **`/share <file>`.** Publish yourself, without a model turn. `/share` alone
+  re-shares the last file to the same link; `--new` makes a fresh one.
+- **Last link in the footer**, with its expiry:
+  `last published: https://p.htmldoc.space/… expires: 2026-11-12 (Pin to survive expiry)`.
+- **Sign-in without leaving Pi.** The first share shows a GitHub approval
+  link and opens it in your browser. Approve once, and Pi finishes the share.
+  `/htmldoc-login` does it ahead of time.
+- **Memory across sessions.** Pi remembers which link belongs to which file,
+  so "share it again" updates the right page after you resume or branch.
+- **A bundled skill** that tells the model when to publish and when to
+  update.
 
-Shares are kept in the session, so "share it again" still updates the right
-link after you resume or branch a session.
+## Free, with limits
 
-## How it works
+htmldoc.space is free and run by one person.
 
-The package depends on [`htmldoc-cli`](https://www.npmjs.com/package/htmldoc-cli)
-and runs its pinned copy; nothing is fetched at run time. Your API key lives
-in the CLI's config (`~/.config/htmldoc/`), the same one `htmldoc` uses in
-your terminal, so signing in once covers both.
+| | |
+|---|---|
+| File types | `.html`, `.htm`, `.md`, `.markdown`, one file per link |
+| Size | 2 MB HTML, 512 KB Markdown |
+| Lifetime | 30 days, reset on every update; pin up to 5 pages on your dashboard to keep them |
+| Live pages | 100 per account |
+| Account | GitHub sign-in |
 
-In Pi's print and JSON modes there is no UI to show the approval link, so a
-missing key fails with a hint. Sign in once from a terminal:
+Links are unlisted and kept out of search engines, but not private: anyone
+with the link can open it. Pages carry a small badge with a Report link and
+nothing else: no ads, no analytics.
 
-```sh
-npx htmldoc-cli login
-```
+## Your key stays out of the conversation
 
-## Already using the htmldoc skill?
+The tool runs the bundled [`htmldoc-cli`](https://www.npmjs.com/package/htmldoc-cli),
+which keeps your API key in `~/.config/htmldoc/`. The model never reads it,
+never types it, and never runs login commands. The sign-in link goes to you
+through Pi's UI, not through the chat. Signing in once also covers `htmldoc`
+in your terminal.
 
-The bundled skill is named `pi-htmldoc`, so it loads alongside the generic
-`htmldoc` skill from `npx skills add ajaxray/htmldoc-skill` without a name
-clash. It tells the model to use the tool instead of running the CLI in a
-shell. You can keep both, or remove the generic one so only one htmldoc skill
-sits in Pi's prompt.
+## More
+
+- Try it for one session without installing: `pi -e npm:pi-htmldoc`
+- In Pi's print and JSON modes there is no UI for the approval link. Sign in
+  once from a terminal with `npx htmldoc-cli login`.
+- Already installed the generic `htmldoc` skill (`npx skills add ajaxray/htmldoc-skill`)?
+  The two load side by side; this package's skill tells the model to use the
+  tool. Remove the generic one if you want a single htmldoc skill in Pi's
+  prompt.
+- Your dashboard at [htmldoc.space/dashboard](https://htmldoc.space/dashboard)
+  lists every link, with pin and delete.
+- Bugs and ideas: [issues](https://github.com/ajaxray/pi-htmldoc/issues).
 
 ## Development
 
