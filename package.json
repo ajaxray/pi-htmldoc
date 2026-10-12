@@ -1,6 +1,6 @@
 {
   "name": "pi-htmldoc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Free artifact publishing for Pi: share any HTML or Markdown file your agent writes as a link anyone can open. One tool call, no deploy, no hosting.",
   "license": "MIT",
   "type": "module",
