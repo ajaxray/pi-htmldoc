@@ -36,7 +36,7 @@
     "skills": [
       "./skills"
     ],
-    "image": "https://htmldoc.space/og.png"
+    "image": "https://raw.githubusercontent.com/ajaxray/pi-htmldoc/main/docs/preview.png"
   },
   "dependencies": {
     "htmldoc-cli": "^0.2.1"
