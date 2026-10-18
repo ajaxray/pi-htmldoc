@@ -77,6 +77,7 @@ in your terminal.
 
 ## More
 
+- The full tour: [htmldoc.space/pi](https://htmldoc.space/pi)
 - Try it for one session without installing: `pi -e npm:pi-htmldoc`
 - In Pi's print and JSON modes there is no UI for the approval link. Sign in
   once from a terminal with `npx htmldoc-cli login`.

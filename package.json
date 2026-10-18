@@ -46,7 +46,7 @@
     "@earendil-works/pi-tui": "*",
     "typebox": "*"
   },
-  "homepage": "https://htmldoc.space",
+  "homepage": "https://htmldoc.space/pi",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ajaxray/pi-htmldoc.git"
