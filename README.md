@@ -39,8 +39,9 @@ renders it in any browser.
 - **`htmldoc_publish` tool.** Pi calls it whenever you ask to share, publish,
   or make a file shareable. The result carries the link, id, and expiry, and
   the link is clickable in your terminal.
-- **`/share <file>`.** Publish yourself, without a model turn. `/share` alone
-  re-shares the last file to the same link; `--new` makes a fresh one.
+- **`/publish <file>`.** Publish yourself, without a model turn. `/publish`
+  alone re-publishes the last file to the same link; `--new` makes a fresh
+  one. (Pi's own `/share` is different: it uploads your session.)
 - **Last link in the footer**, with its expiry:
   `last published: https://p.htmldoc.space/… expires: 2026-11-12 (Pin to survive expiry)`.
 - **Sign-in without leaving Pi.** The first share shows a GitHub approval

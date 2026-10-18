@@ -1,6 +1,7 @@
 /**
- * htmldoc for Pi: the htmldoc_publish tool, the /share and /htmldoc-login
- * commands, and a status line with the last shared link.
+ * htmldoc for Pi: the htmldoc_publish tool, the /publish and /htmldoc-login
+ * commands, and a status line with the last shared link. The command is not
+ * /share: that name is Pi's built-in session upload, which wins over ours.
  *
  * Everything goes through the bundled htmldoc-cli, so the API key stays in
  * the CLI's config and never reaches the model. A missing key starts the
@@ -132,7 +133,7 @@ export default function (pi: ExtensionAPI) {
 		showStatus(ctx);
 	};
 
-	// Shares live in the session (tool result details and /share messages), so a
+	// Shares live in the session (tool result details and /publish messages), so a
 	// resumed or branched session still knows which id belongs to which file.
 	const rebuild = (ctx: ExtensionContext) => {
 		shares = new Map();
@@ -257,8 +258,8 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerCommand("share", {
-		description: "Publish a file to htmldoc.space: /share <file> [--new]. No file re-shares the last one.",
+	pi.registerCommand("publish", {
+		description: "Publish a file to htmldoc.space: /publish <file> [--new]. No file re-publishes the last one.",
 		handler: async (args, ctx) => {
 			const words = args.trim().split(/\s+/).filter(Boolean);
 			const fresh = words.includes("--new");
@@ -268,7 +269,7 @@ export default function (pi: ExtensionAPI) {
 				.replace(/^(["'])(.*)\1$/, "$2");
 			const file = target ? resolve(ctx.cwd, target) : last?.file;
 			if (!file) {
-				ctx.ui.notify("Usage: /share <file> [--new]. With no file, re-shares the last shared file.", "warning");
+				ctx.ui.notify("Usage: /publish <file> [--new]. With no file, re-publishes the last shared file.", "warning");
 				return;
 			}
 			// Re-sharing a file this session already shared keeps its link unless --new is given.
