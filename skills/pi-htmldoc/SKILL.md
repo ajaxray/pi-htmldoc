@@ -28,6 +28,15 @@ If it is unclear which file the user means, ask before calling the tool. If
 the content exists only in the conversation, write it to a file first, named
 after its title or topic (for example `report.html`), then publish that path.
 
+## Diagrams in Markdown
+
+Markdown pages render GitHub-flavoured Markdown, and a ```` ```mermaid ````
+code block renders as a diagram (flowchart, sequence, class, state, Gantt,
+and the other Mermaid types). When you write a Markdown file to share and it
+needs a diagram, use a Mermaid block rather than ASCII art. Get the syntax
+right: a block that does not parse is shown as plain code. Do not rewrite a
+file the user wrote just to add diagrams.
+
 ## Publish
 
 Call `htmldoc_publish` with `path`. Reply with the link, the expiry, and "say
